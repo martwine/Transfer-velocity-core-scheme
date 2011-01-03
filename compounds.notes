@@ -1,0 +1,27 @@
+notes on newcompounds.dat
+
+the following KH temperature dependencies are assumed:
+
+Ethanolamine, all methylated selenium compounds
+
+All Henry's law constants from Sander 1999 except:
+	_
+IO    	 |
+HOI	 |
+HOBr	 |- from  Saiz-Lopez, A. and Boxe, C. S.: Atmos. Chem. Phys. Discuss., 8, 2953-2976, 2008.
+IBr	 |
+ICl	 |
+BrCl	 |
+	¬
+
+
+
+DMSe from
+U. Karlson, W. T. Frankenberger Jr., W. F. Spencer, J. Chem. Eng. Data, 1994, 39 (3), 608–610
+
+DMSeS from Zhang, Y. and W.T. Frankenberger, J. Environ. Qual., 2002, 31, 1124-1128
+
+For molar volume of Selenium compounds see Liss, P.S., S. Turner and M.T. Johnson, "Global Se cycle", Phil. Trans. Roy. Soc. A, in prep
+
+
+
