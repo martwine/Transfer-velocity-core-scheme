@@ -271,7 +271,7 @@ f04<-function(){
 
 f05<-function(){
 	data<-read.csv("coarecomp.dat")
-	Nightingale<-360000*kw_mean("CO2",15,WS_LOTS,35,normalize=660)
+	Nightingale<-360000*kw("CO2",15,WS_LOTS,35,normalize=660)
 	Woolf<-Woolf97kw("CO2",15,WS_LOTS,35,normalize=660)*360000
 	WannLT<-0.39*(WS_LOTS^2)
 	WannST<-0.31*(WS_LOTS^2)
@@ -451,7 +451,7 @@ f07_old<-function(T=15){
  lines(WS_LOTS,360000*Nightingkw("DMS",T,WS_LOTS,35,normalize=660),lty=3, lwd=3,col="firebrick")
  lines(WS_LOTS,360000*Wannkw("DMS",T,WS_LOTS,35,normalize=660),lty=3,lwd=3,col="darkslateblue")
  lines(WS_LOTS,360000*Woolf97kw("DMS",T,WS_LOTS,35,normalize=660),lty=3,lwd=3,col="forestgreen")
- total_K_N2000<-360000/((1/(kw_mean("DMS",T,WS_LOTS,35,normalize=660)))+(1/(KH("DMS",T,35)*ka("DMS",WS_LOTS,T)))) 
+ total_K_N2000<-360000/((1/(kw("DMS",T,WS_LOTS,35,normalize=660)))+(1/(KH("DMS",T,35)*ka("DMS",WS_LOTS,T)))) 
  total_K_W1997<-360000/((1/(Woolf97kw("DMS",T,WS_LOTS,35,normalize=660)))+(1/(KH("DMS",T,35)*ka("DMS",WS_LOTS,T))))
 total_K_W1997_CO2<-360000/((1/(Woolf97kw("CO2",T,WS_LOTS,35,normalize=660)))+(1/(KH("CO2",T,35)*ka("CO2",WS_LOTS,T))))
  lines(WS_LOTS,total_K_N2000,lty=4, lwd=4, col="firebrick")
