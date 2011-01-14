@@ -522,7 +522,7 @@ f08<-function(){
  oldkg<-NH3comp[,7]
  oldminflux<-NH3comp[,8]
  oldmaxflux<-NH3comp[,9]
- newkg<-kg("NH3",ws,t)
+ newkg<-ka("NH3",ws,t)
  newdeltac<--((NH3g*1000)-(NH3sw*KH("NH3",t,sal)))
  newflux<-newdeltac*newkg
  oldflux<-oldkg*deltac
