@@ -29,3 +29,6 @@ CO2 eddy covariance data from huebert et al 2010 (see OS manuscript)
 huebertDMS.dat
 DMS eddy covariance data from Huebert et al 2010
 
+NH3comparison.csv
+data from Johnson et al 2008. GBC paper on ammonia fluxes, calculated the 'old' way and using the Johnson 2010 scheme - for comparison. Used in figure plotting in OSplots.R
+

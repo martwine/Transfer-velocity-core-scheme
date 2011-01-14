@@ -512,7 +512,21 @@ f07<-function(T=15){
 
 
 f08<-function(){
- source("NH3comp.r")
+ NH3comp<-read.table("NH3comparison.csv",header=TRUE)
+ t<-NH3comp[,1]
+ sal<-NH3comp[,2]
+ ws<-NH3comp[,3]
+ NH3sw<-NH3comp[,4]
+ NH3g<-NH3comp[,5]
+ deltac<-NH3comp[,6]
+ oldkg<-NH3comp[,7]
+ oldminflux<-NH3comp[,8]
+ oldmaxflux<-NH3comp[,9]
+ newkg<-kg("NH3",ws,t)
+ newdeltac<--((NH3g*1000)-(NH3sw*KH("NH3",t,sal)))
+ newflux<-newdeltac*newkg
+ oldflux<-oldkg*deltac
+
  pdf("f08.pdf",width=8.3,height=8.3)
  par(mar=c(6,6,2,2))
  plot(newflux,oldflux,pch=20,xaxs="i",yaxs="i",ylab=expression(paste("Johnson et al. 2008 flux / pmol ",m^{-2}," ",s^{-1})),
