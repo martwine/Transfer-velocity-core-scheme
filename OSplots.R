@@ -1,7 +1,6 @@
 # plots for OS numerical scheme paper
 
-source("K_calcs_T_S.R")
-source("kg.r")
+source("K_calcs_Johnson_OS.R")
 
 #Make smoother curves by having more winspeed values
 
@@ -132,6 +131,34 @@ f02<-function(T=15){
     dev.off()
 }
 
+
+
+# u_* (friction velocity) is related to windspeed through the drag coefficient, C_D. C_D = (u*/u)^2. 
+# rearranging, u* = sqrt(C_d)*u
+
+# in Duce et al, C_D is constant at 1.3e-3
+
+Duce_u_star<-function(u){
+	u_star<-u*sqrt(1.3e-03)
+	u_star
+} 
+
+# Mackay and Yeun use the parameterisation of Smith (1980), J. Phys. Oceanog,10,709
+
+Smith_u_star<-function(u){
+	u_star<-u*sqrt(1e-4*(6.1+0.63*u))
+	u_star
+}
+
+# Large and Pond (1981), J. Phys Oceanog 11, 324 also present one:
+
+Large_Pond_u_star<-function(u){
+	C_d<-ifelse(u<11,1.2,0.49 + (0.065*u))
+	u_star=u*sqrt(C_d*1e-3)
+	u_star
+}
+
+
 f03<-function(T=15){
     #compare new duce term with Jeffery and Mackay and Yeun
     pdf("f03.pdf", paper="special", width=16.6,height=8.3)
@@ -182,8 +209,35 @@ f03<-function(T=15){
 }
  
 
+#fairall 2003 Cd10N from graph:
+Fairall_winds<-c(0.485829959514, 0.890688259109, 1.25506072874,	1.65991902834, 2.30769230769, 3.15789473684, 4.08906882591, 5.78947368421, 8.17813765182, 9.91902834008, 12.2672064777, 17.5708502024, 18.1376518219, 24.9392712551, 30)
+Fairall_Cd<-c(0.000553888035739,0.000405855487525,0.000344054765561,0.000294544384835,0.000257199696855,0.000244360902256,0.000280733332004,0.000402838994037,0.000586097205879,0.00072049320915,	0.000989983247243,0.00162711154544,0.00168833888435,0.00229991424184,0.00275) 
+
+#compare all this with the Jeffrey et al 2010 implementation of the NOAA COARE algorithm
+
+#first with CD as and input
+Jeffrey_with_CD<-function(compound,u,T=15,Cd){
+	von_kar<-0.4
+	#Cd<-1e-4*(6.1+0.63*u)
+	Sc<-Sc_air(compound,T)
+	ra<-13.3*sqrt(Sc) + (Cd^(-0.5)) - 5 + log(Sc)/(2*von_kar)
+	u_star<-sqrt(Cd*(u^2))
+	u_star/ra
+}
+
+#now applying Smith(1980) Cd
+Jeffrey_ka<-function(compound,u,T=15){
+	von_kar<-0.4
+	Cd<-1e-4*(6.1+0.63*u)
+	Sc<-Sc_air(compound,T)
+	ra<-13.3*sqrt(Sc) + (Cd^(-0.5)) - 5 + log(Sc)/(2*von_kar)
+	u_star<-sqrt(Cd*(u^2))
+	u_star/ra
+}
+
 
 #compare Jeffrey implementation with Fairall 2003 Cd with Jeffery/Smith
+
 f04<-function(){
 	pdf("f04.pdf", paper="special",width=16.6, height=8.3)
 	counter<-1
@@ -217,8 +271,8 @@ f04<-function(){
 
 f05<-function(){
 	data<-read.csv("coarecomp.dat")
-	Nightingale<-360000*kl_mean("CO2",15,WS_LOTS,35,normalize=660)
-	Woolf<-Woolf97kl("CO2",15,WS_LOTS,35,normalize=660)*360000
+	Nightingale<-360000*kw_mean("CO2",15,WS_LOTS,35,normalize=660)
+	Woolf<-Woolf97kw("CO2",15,WS_LOTS,35,normalize=660)*360000
 	WannLT<-0.39*(WS_LOTS^2)
 	WannST<-0.31*(WS_LOTS^2)
 	McGillis<-3.3+0.026*(WS_LOTS^3)
@@ -394,12 +448,12 @@ f07_old<-function(T=15){
  #NOAA COARE CO2 with bubbles from Huebert 2010
  lines(read.table("COARECO2Bubbles.dat"),lty=2,lwd=3)
 
- lines(WS_LOTS,360000*Nightingkl("DMS",T,WS_LOTS,35,normalize=660),lty=3, lwd=3,col="firebrick")
- lines(WS_LOTS,360000*Wannkl("DMS",T,WS_LOTS,35,normalize=660),lty=3,lwd=3,col="darkslateblue")
- lines(WS_LOTS,360000*Woolf97kl("DMS",T,WS_LOTS,35,normalize=660),lty=3,lwd=3,col="forestgreen")
- total_K_N2000<-360000/((1/(kl_mean("DMS",T,WS_LOTS,35,normalize=660)))+(1/(KH("DMS",T,35)*ka("DMS",WS_LOTS,T)))) 
- total_K_W1997<-360000/((1/(Woolf97kl("DMS",T,WS_LOTS,35,normalize=660)))+(1/(KH("DMS",T,35)*ka("DMS",WS_LOTS,T))))
-total_K_W1997_CO2<-360000/((1/(Woolf97kl("CO2",T,WS_LOTS,35,normalize=660)))+(1/(KH("CO2",T,35)*ka("CO2",WS_LOTS,T))))
+ lines(WS_LOTS,360000*Nightingkw("DMS",T,WS_LOTS,35,normalize=660),lty=3, lwd=3,col="firebrick")
+ lines(WS_LOTS,360000*Wannkw("DMS",T,WS_LOTS,35,normalize=660),lty=3,lwd=3,col="darkslateblue")
+ lines(WS_LOTS,360000*Woolf97kw("DMS",T,WS_LOTS,35,normalize=660),lty=3,lwd=3,col="forestgreen")
+ total_K_N2000<-360000/((1/(kw_mean("DMS",T,WS_LOTS,35,normalize=660)))+(1/(KH("DMS",T,35)*ka("DMS",WS_LOTS,T)))) 
+ total_K_W1997<-360000/((1/(Woolf97kw("DMS",T,WS_LOTS,35,normalize=660)))+(1/(KH("DMS",T,35)*ka("DMS",WS_LOTS,T))))
+total_K_W1997_CO2<-360000/((1/(Woolf97kw("CO2",T,WS_LOTS,35,normalize=660)))+(1/(KH("CO2",T,35)*ka("CO2",WS_LOTS,T))))
  lines(WS_LOTS,total_K_N2000,lty=4, lwd=4, col="firebrick")
  lines(WS_LOTS,total_K_W1997,lty=4, lwd=4, col="forestgreen")
  lines(WS_LOTS,total_K_W1997_CO2,lty=5, lwd=4, col="forestgreen")
@@ -436,12 +490,12 @@ f07<-function(T=15){
  #NOAA COARE CO2 with bubbles from Huebert 2010
  lines(read.table("COARECO2Bubbles.dat"),lty=2,lwd=3)
 
- lines(WS_LOTS,360000*Nightingkl("DMS",T,WS_LOTS,35,normalize=660),lty=3, lwd=3,col="firebrick")
+ lines(WS_LOTS,360000*Nightingkw("DMS",T,WS_LOTS,35,normalize=660),lty=3, lwd=3,col="firebrick")
 
- lines(WS_LOTS,360000*Woolf97kl("DMS",T,WS_LOTS,35,normalize=660),lty=1,lwd=3,col="lightblue")
+ lines(WS_LOTS,360000*Woolf97kw("DMS",T,WS_LOTS,35,normalize=660),lty=1,lwd=3,col="lightblue")
 
- total_K_W1997<-360000/((1/(Woolf97kl("DMS",T,WS_LOTS,35,normalize=660)))+(1/(KH("DMS",T,35)*ka("DMS",WS_LOTS,T))))
- total_K_W1997_CO2<-360000/((1/(Woolf97kl("CO2",T,WS_LOTS,35,normalize=660)))+(1/(KH("CO2",T,35)*ka("CO2",WS_LOTS,T))))
+ total_K_W1997<-360000/((1/(Woolf97kw("DMS",T,WS_LOTS,35,normalize=660)))+(1/(KH("DMS",T,35)*ka("DMS",WS_LOTS,T))))
+ total_K_W1997_CO2<-360000/((1/(Woolf97kw("CO2",T,WS_LOTS,35,normalize=660)))+(1/(KH("CO2",T,35)*ka("CO2",WS_LOTS,T))))
 
  lines(WS_LOTS,total_K_W1997,lty=1, lwd=4, col="forestgreen")
  lines(WS_LOTS,total_K_W1997_CO2,lty=2, lwd=4, col="forestgreen")
