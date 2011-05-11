@@ -93,4 +93,16 @@ Ne			Ne				20.18	4.5e-4	500	0 0 0 0 0 0 0 0 0 0 0 0 0 16.71
 Kr			Kr				83.80	2.45e-3	1700	0 0 0 0 0 0 0 0 0 0 0 0 0 34.73
 Ar			Ar				39.95	1.4e-3	1300	0 0 0 0 0 0 0 0 0 0 0 0 0 24.12
 PH3		        PH[3]				34.0	0.0081	2000	0	0	0	0	0	0	0	0	0	0	0	0	0	40.53
+isoprene		Isoprene	68.12	1.3e-02	4500	5	8	0	0	0	0	0	0	0	0	2	0	0	0
+isoprene_upper		Isoprene*	68.12	2.8e-02	4500	5	8	0	0	0	0	0	0	0	0	2	0	0	0
+aPinene			alpha,-Pinene	136.24	7.47e-03	4440	10	16	0	0	0	0	0	0	0	0	1	0	1	0
+bPinene			beta,-Pinene	136.24	1.47e-02	4450	10	16	0	0	0	0	0	0	0	0	1	0	1	0
+aPhellandrene		alpha,-Phellandrene	136.24	1.82e-02	4450	10	16	0	0	0	0	0	0	0	0	2	0	1	0
+bPhellandrene		beta,-Phellandrene	136.24	1.82e-02	5090	10	16	0	0	0	0	0	0	0	0	2	0	1	0
+aTerpinene		alpha,-Terpinene	136.24	2.90e-02	4790	10	16	0	0	0	0	0	0	0	0	2	0	1	0
+yTerpinene		gamma,-Terpinene	136.24	3.87e-02	4775	10	16	0	0	0	0	0	0	0	0	2	0	1	0
+aTerpinolene		alpha,-Terpinonlene	136.24	3.81e-02	5450	10	16	0	0	0	0	0	0	0	0	2	0	1	0
+aTerpinolene		alpha,-Terpinonlene	136.24	3.81e-02	5450	10	16	0	0	0	0	0	0	0	0	2	0	1	0
+Limonene		Limonene	136.24	3.78e-02	4510	10	16	0	0	0	0	0	0	0	0	2	0	1	0
+aTerpineol		alpha,-Terpineol	154.25	448	2165	10	18	0	1	0	0	0	0	0	0	1	0	1	0
 
