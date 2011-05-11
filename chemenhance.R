@@ -20,7 +20,7 @@ alpha_kw <- function (compound,ws,T,S,khyd=1e-100,tau=1.0000000001){
         #khyd is pseudo first-order rate constant of reaction in water
 	# z is apparent mass boundary layer depth (see Liss and Slater 1974)
         z <- z_from_wind(compound,T,ws,S)
-	x <- z*sqrt(khyd*tau/Diff)
+	x <- z*sqrt(khyd*tau/(0.5*(diff_HM(compound,T,S)+diff_WC(compound,T,S))))
 	alpha <- (tau)/((tau-1) + (tanh(x)/x))
     	alpha
 }
